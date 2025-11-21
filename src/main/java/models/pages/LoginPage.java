@@ -3,6 +3,7 @@ package models.pages;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
+import io.qameta.allure.Step;
 import models.components.authentication.LoginDialogComponent;
 import models.components.global.BottomNavComponent;
 import org.openqa.selenium.By;
@@ -20,16 +21,19 @@ public class LoginPage {
         this.appiumDriver = appiumDriver;
     }
 
+    @Step("Input username as {username}")
     public LoginPage inputUsername(String username){
         appiumDriver.findElement(usernameSel).sendKeys(username);
         return this;
     }
 
+    @Step("Input password as {password}")
     public LoginPage inputPassword(String password){
         appiumDriver.findElement(passwordSel).sendKeys(password);
         return this;
     }
 
+    @Step("Click on login btn")
     public LoginPage clickLoginBtn(){
         appiumDriver.findElement(loginBtnSel).click();
         return this;

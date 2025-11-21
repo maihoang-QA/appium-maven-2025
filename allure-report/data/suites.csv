@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Test login with data driven....","3579","Login Test","Regression","2025-11-21","passed","2025-11-21","test.authentication.LoginTest","authentication","test.authentication.LoginTest","loginWithInCorrectCreds"
+"","5534","Login Test","Regression","2025-11-21","passed","2025-11-21","test.authentication.LoginTest","authentication","test.authentication.LoginTest","loginWithCorrectCreds"
+"Test login with data driven....","121179","Login Test","Regression","2025-11-21","broken","2025-11-21","test.authentication.LoginTest","authentication","test.authentication.LoginTest","loginWithInCorrectCreds"

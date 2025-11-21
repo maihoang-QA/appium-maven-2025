@@ -1,78 +1,53 @@
 package test.authentication;
 
 import driver.DriverFactorySample;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Description;
 import models.components.global.BottomNavComponent;
 import models.pages.LoginPage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import org.testng.annotations.*;
+import test.BaseTest;
+import test_data.LoginCreds;
+import test_data.authentication.DataObjectBuilder;
+import test_flows.authentication.LoginFlow;
 
-public class LoginTest {
-    private  SoftAssert softAssert;
+import java.util.Base64;
 
-    @BeforeClass
-    public void beforeClass(){
-        softAssert = new SoftAssert();
-    }
-    @AfterClass
-    public void afterClass(){
-        softAssert.assertAll();
-    }
+public class LoginTest extends BaseTest {
 
-    @Ignore
-    @Test(priority = 2)
-    public void loginWithCorrectCreds() {
-            DriverFactorySample.startAppiumServer();
-
-            try {
-
+    @Description("Test login with data driven....")
+    @Test(dataProvider = "invalidloginCredsData", description = "Login Test", priority = 1)
+    public void loginWithInCorrectCreds(LoginCreds loginCreds) {
                 //Init Driver
-                AndroidDriver<MobileElement> androidDriver = DriverFactorySample.getAndroidDriver();
-                //Login Page
-                LoginPage loginPage = new LoginPage(androidDriver);
-
-                //Bottom Nav Comp
-                BottomNavComponent bottomNavComponent = loginPage.bottomNavComp();
-                bottomNavComponent.clickLoginLabel();
-                bottomNavComponent.formsLabelElem().click();
-                bottomNavComponent.loginLabelElem().click();
-
-                //Fill login Forms
-                loginPage.inputUsername("mai@gmail.com")
-               .inputPassword("12345678")
-               .clickLoginBtn();
-
-                //Verification
-                String actualLoginMsg = loginPage.loginDialogComp().msgTitleSel();
-                boolean isTitleCorrect = actualLoginMsg.equals("success");
-
-                String customErrMsg = "[ERR] Login msg title incorrect";
-                softAssert.assertTrue(isTitleCorrect, customErrMsg + " | assertEquals");
-                softAssert.assertEquals(actualLoginMsg, "success", "[ERR] Login msg tittle incorrect!");
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }finally {
-                DriverFactorySample.stopAppiumServer();
-            }
+                AppiumDriver<MobileElement> androidDriver = getDriver();
+                LoginFlow loginFlow = new LoginFlow(androidDriver);
+                loginFlow.navigateToLoginForm()
+                         .login(loginCreds)
+                         .verifyLoginWithIncorrectCreds();
         }
 
-        @Test(priority = 1, dependsOnMethods = {"a2Void"})
-        void  a1Void(){
-            System.out.println("this should be executed first");
+    @Test(description = "Login Test", priority = 2)
+    public void loginWithCorrectCreds() {
+
+        String jsonLoc = "/src/main/resources/test-data/authentication/ValidLoginCreds.json";
+        LoginCreds loginCreds =  DataObjectBuilder.builDataObject(jsonLoc, LoginCreds[].class)[0];
+                //Init Driver
+                AppiumDriver<MobileElement> androidDriver = getDriver();
+                LoginFlow loginFlow = new LoginFlow(androidDriver);
+                loginFlow.navigateToLoginForm()
+                         .login(loginCreds)
+                         .verifyLoginSuccess();
         }
 
-        @Test
-        void  a2Void(){
-            Assert.assertTrue(false);
+
+        @DataProvider
+        public  LoginCreds[] invalidloginCredsData(){
+            String jsonLoc = "/src/main/resources/test-data/authentication/InValidLoginCreds.json";
+           return DataObjectBuilder.builDataObject(jsonLoc, LoginCreds[].class);
+
         }
 
     }

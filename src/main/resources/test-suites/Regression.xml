@@ -3,14 +3,14 @@
 <suite name="Regression">
     <test name="authentication">
         <classes>
-            <class name="test.testng.LoginTest"/>
-            <class name="test.testng.DemoTest"/>
+            <class name="test.authentication.LoginTest"/>
+<!--            <class name="test.testng.DemoTest"/>-->
         </classes>
     </test>
 
-    <test name="signup">
-        <classes>
-            <class name="test.testng.SignupTest"/>
-        </classes>
-    </test>
+<!--    <test name="signup">-->
+<!--        <classes>-->
+<!--            <class name="test.testng.SignupTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>
