@@ -5,6 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import models.components.global.BottomNavComponent;
 import models.pages.LoginPage;
 import org.testng.Assert;
@@ -18,6 +19,7 @@ import java.util.Base64;
 
 public class LoginTest extends BaseTest {
 
+    @TmsLink("TS_8734")
     @Description("Test login with data driven....")
     @Test(dataProvider = "invalidloginCredsData", description = "Login Test", priority = 1)
     public void loginWithInCorrectCreds(LoginCreds loginCreds) {
@@ -29,6 +31,9 @@ public class LoginTest extends BaseTest {
                          .verifyLoginWithIncorrectCreds();
         }
 
+
+    @TmsLink("TS_8735")
+    @Description("Test login with data driven....")
     @Test(description = "Login Test", priority = 2)
     public void loginWithCorrectCreds() {
 

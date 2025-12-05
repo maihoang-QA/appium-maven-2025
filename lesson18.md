@@ -44,7 +44,7 @@ vì sẽ có thằng chạy xong sớm chạy xong muôn (After Class 1 > After 
   mvn clean test "-DsuiteXmlFile=src/main/resources/test-suites/Regression.xml"
 - Mong muốn verify dc tất cả các assert trong màn hình mà ko pải kiểu sai 1 assert thì chương trình sẽ
 dừng lại > Dùng Soft Assert từ TestNG
-- Lưu ý: Khi dùng SoftAssert thì đêns cuối pải dùng softAssert.assertAll() > nếu ko
+- Lưu ý: Khi dùng SoftAssert thì đêns cuối pải dùng softAssert.assertAll() > nếu ko 
 dù có sai cũng thành pass vì n sẽ ko verify cái assert nào cả
   SoftAssert softAssert = new SoftAssert();
 
